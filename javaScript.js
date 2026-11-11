@@ -15,12 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 function enter() {
     let mathFieldSpan = document.getElementById('math-field');
-    // var resultDisplay = document.getElementById('result');
     let enteredMath = document.getElementById('latex-output').textContent;
     const exp = parse(enteredMath);
     console.log(JSON.stringify(exp, null, 2));
-    // var result = calculate(enteredMath);
-    // resultDisplay.textContent = result;
+    let result = symbolicDifferentiation(enteredMath);
+    resultDisplay.textContent = result;
 }
 function split(input) {
     const regex = /\s*(\d+(?:\.\d+)?|[a-zA-Z]+|[+\-*\/^{}]|(\\frac)|(\\left\()|(\\right\))|(\\cdot))/gy;
@@ -397,7 +396,7 @@ function toString(node, parentPrecedence = 0) {
 function symbolicDifferentiate(input, variable = "x") {
     const tree = parse(input);
     const derivative = differentiate(tree, variable);
-    const simplified = simplify(derivative);
-
-    return toString(simplified);
+    // const simplified = simplify(derivative);
+    return toString(derivative);
+    // return toString(simplified);
 }
