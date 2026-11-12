@@ -14,12 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
     MQ.MathField(document.getElementById('math-field'), {autoCommands: 'sin'});
 });
 function enter() {
-    let mathFieldSpan = document.getElementById('math-field');
-    let enteredMath = document.getElementById('latex-output').textContent;
+    const mathFieldSpan = document.getElementById('math-field');
+    const enteredMath = document.getElementById('latex-output').textContent;
+    const resultDisplay = document.getElementById('result');
     const exp = parse(enteredMath);
     console.log(JSON.stringify(exp, null, 2));
-    let result = symbolicDifferentiation(enteredMath);
-    resultDisplay.textContent = result;
+    let result = differentiate(exp);
+    console.log(JSON.stringify(result,null,2));
+    resultDisplay.textContent = toString(result);
 }
 function split(input) {
     const regex = /\s*(\d+(?:\.\d+)?|[a-zA-Z]+|[+\-*\/^{}]|(\\frac)|(\\left\()|(\\right\))|(\\cdot))/gy;
@@ -99,18 +101,19 @@ function parse(input) {
             if (consume() !== "{") {
                 throw new Error("Expected '{' after \\frac");
             }
-            const numerator = expression();
+            left = expression();
             if (consume() !== "}") {
                 throw new Error("Expected '}' after numerator");
             }
             if (consume() !== "{") {
                 throw new Error("Expected '{' before denominator");
             }
-            const denominator = expression();
+            let right = expression();
             if (consume() !== "}") {
                 throw new Error("Expected '}' after denominator");
             }
-            left = { type: "frac", numerator, denominator };
+            let op="/";
+            left = { type: "bin",op, left, right };
         }
         else {
             throw new Error("Unexpected exp: " + current);
@@ -129,13 +132,22 @@ function parse(input) {
             const nextMin = op === "^" ? p : p + 1;
 
             const right = expression(nextMin);
-
-            left = {
+            if(op==="\\cdot"){
+                let op="*";
+                left={
+                    type: "bin",
+                    op,
+                    left,
+                    right
+                };
+            }else{
+                left = {
                 type: "bin",
                 op,
                 left,
                 right
             };
+            }
         }
 
         return left;
@@ -169,7 +181,9 @@ function differentiate(node, variable = "x") {
         const v = node.right;
 
         const du = differentiate(u, variable);
+        console.log(JSON.stringify(left,null,2));
         const dv = differentiate(v, variable);
+        console.log(JSON.stringify(left,null,2));
 
         switch (node.op) {
             // Sum rule

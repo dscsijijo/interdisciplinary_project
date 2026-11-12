@@ -1,0 +1,34 @@
+body{
+    background-color: lightgray;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#nav_bar{
+    display: flex;
+    background-color: lightblue;
+    justify-content: space-between;
+}
+#nav_bar a{
+    padding: 0.7%;
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+}
+#nav_bar a:hover{
+    background-color: lightgray;
+}
+#main{
+    width:50%;
+    margin:0 auto;
+    background-color: white;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-bottom: 5%;
+    padding-bottom: 1%;
+    border:1px solid darkgrey;
+    border-top: 0;
+}

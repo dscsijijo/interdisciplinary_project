@@ -9,17 +9,24 @@
     <link rel="stylesheet" href="mathquill-0.10.1/mathquill.css">
     <script src="mathquill-0.10.1/mathquill.js"></script>
     <script src="javaScript.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <p>
-        Type math here: <span id="math-field"></span>
-    </p>
-    <p>
-        LaTeX output: <span id="latex-output"></span>
-    </p>
-    <button onclick="enter()">calculate</button>
-    <p id="result"></p>
+    <div id="nav_bar">
+        <a href="index.html">Home</a>
+        <a href="practice.html">practice problems</a>
+    </div>
+    <div id="main">
+        <p>
+            Type math here: <span id="math-field"></span>
+        </p>
+        <p>
+            LaTeX output: <span id="latex-output"></span>
+        </p>
+        <button onclick="enter()">calculate</button>
+        <p id="result"> </p>
+    </div>
 </body>
 
 </html>
